@@ -1,0 +1,127 @@
+*
+{
+  box-sizing: border-box;
+}
+
+.hidden
+{
+  display: none;
+}
+
+body
+{
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  margin: 0;
+
+}
+
+.EUCLogin
+{
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr [form] minmax(240px, 450px) 1fr;
+  grid-template-rows: 1fr [form] 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  background:linear-gradient(
+    rgba(0, 0, 0, 0.55), 
+    rgba(0, 0, 0, 0.55)
+  ),  url(https://assets.newatlas.com/dims4/default/48bbc78/2147483647/strip/true/crop/1600x1067+0+0/resize/1200x800!/quality/90/?url=http%3A%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2F75%2F20%2Fd09d85ce41c3b8d79af5a358cce0%2F118647527-3309947595756904-8601067220491705143-o.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+}
+
+.form--login
+{
+    background-color: #F3F3F3;
+    padding: 1em;
+    color: #505050;
+    grid-column: form;
+    grid-row: form;
+    border-radius: 1em;
+}
+
+.form__error
+{
+  background-color: orangered;
+  color: white;
+  font-weight: lighter;
+  padding: 0.3em 1em;
+  margin-bottom: 1em;
+  font-size: 0.9em;
+}
+
+.form__field
+{
+  padding-bottom: 1em;
+}
+
+.form__field label
+{
+  display: block;
+  margin-bottom: 0.2em;
+}
+
+.form__field .label__inline
+{
+  display: inline-block;
+}
+
+.form__field input[type=text], 
+.form__field input[type=password] 
+{
+  width: 100%;
+  padding: 0.3em;
+  font-size: 1.4em;
+}
+
+.btn
+{
+  width: 100%;
+  margin: 0.5em auto;
+}
+
+.btn--primary
+{
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    border: none;
+    padding: 0.3em 2em;
+    font-size: 1.4em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    
+}
+
+a {
+  text-decoration: none;
+  color: orangered;
+}
+
+
+.navbar
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5em;
+}
+
+.navbar a
+{
+  color: black;
+  font-size: 0.8em;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 2em;
+}
+
+a.navbar__logout
+{
+  margin-left: 2em;
+  margin-right: 0;
+}
