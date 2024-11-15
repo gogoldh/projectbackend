@@ -1,4 +1,68 @@
-<!DOCTYPE html>
+<?php
+include_once (__DIR__ . "/classes/Db.php");
+session_start();
+
+function canLogin($p_email, $p_password){
+    $conn = Db::getConnection();
+    $statement = $conn->prepare('SELECT * FROM user WHERE email = :email');
+    $statement->bindValue(':email', $p_email);
+    $statement->execute();
+
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    if($user){
+        $hash = $user['password'];
+        if(password_verify($p_password, $hash)){
+            // Set session variables on successful login
+            $_SESSION['user'] = $user;
+            if ($user['role'] === 'admin') {
+                header("Location: admin.php");
+            } else {
+                header("Location: index.php");
+            }
+            exit;
+        } else {
+            return false; // wrong password
+        }
+    } else {
+        return false; // No user Account
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    // Call the canLogin function
+    if (canLogin($email, $password)) {
+        // The user will be redirected in the function
+    } else {
+        $error = true; // If login fails, show the error
+    }
+}
+
+
+// function canLogin($p_email, $p_password){
+//     $conn = Db::getConnection();
+//     $statement = $conn->prepare('SELECT * FROM user WHERE email = :email');
+//     $statement->bindValue(':email', $p_email);
+//     $statement->execute();
+
+//     $user = $statement->fetch(PDO::FETCH_ASSOC);
+//     if($user){
+//         $hash = $user['password'];
+//         if(password_verify($p_password, $hash)){
+//             // Set session variables on successful login
+//             $_SESSION['user'] = $user;
+//             header("Location: index.php");
+//             exit;
+//         } else {
+//             return false; // wrong password
+//         }
+//     } else {
+//         return false; // No user Account
+//     }
+// }
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,7 +84,7 @@
 				<?php endif; ?>
 				<div class="form__field">
 					<label for="Email">Email</label>
-					<input type="text" name="email">
+					<input type="email" name="email">
 				</div>
 				<div class="form__field">
 					<label for="Password">Password</label>
