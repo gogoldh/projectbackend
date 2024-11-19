@@ -291,14 +291,17 @@ background-position: 0 50%;
 }
 
 .container .card:after {
-  content: "INMOTION";
+  /* content: "INMOTION"; */
+  top: 83%;
+  left: 50%;
   position: absolute;
-  top: 70%;
-  left: 3%;
+  text-align: center;
+  transform-origin: center center;
   font-size: 4em;
   font-weight: 800;
   font-style: italic;
   color: rgba(255, 255, 255, 0.04);
+  transform: translate(-50%, -50%);
 
 }
 
@@ -406,18 +409,6 @@ background-position: 0 50%;
   border-radius: 50%;
   margin: 0 5px;
   cursor: pointer;
-}
-
-.container .card .contentBx .color span:nth-child(2) {
-   background: #1BBFE9;
-}
-
-.container .card .contentBx .color span:nth-child(3) {
-   background: #1B2FE9;
-}
-
-.container .card .contentBx .color span:nth-child(4) {
-   background: #080481;
 }
 
 .container .card .contentBx a {
@@ -576,5 +567,241 @@ h1{
 
 .admin {
   background-color: var(--black);
+}
+
+
+
+
+.product-container {
+  display: flex;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-images {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.thumbnail-images {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnail-images img {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.thumbnail-images img:hover {
+  border-color: var(--orange);
+}
+
+.product-details {
+  width: 60%;
+  padding-left: 20px;
+}
+
+.product-details h1 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.sale {
+  color: #ff4d4f;
+  font-weight: bold;
+  margin-bottom: 5px;
+  visibility: hidden  ;
+}
+
+.price {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #2e2e2e;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  font-weight: normal;
+  margin-left: 10px;
+}
+
+.stock-status {
+  color: var(--orange);
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.shipping-info {
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.quantity button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.quantity input {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  margin: 0 5px;
+}
+
+.add_to_cart, .buy_now {
+  width: 50%;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 1.1em;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px
+}
+
+.add_to_cart {
+  background-color: #007aff;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.buy_now {
+  background-color: #5a31f4;
+  color: white;
+}
+
+
+h2 {
+  margin-top: 20px;
+  font-size: 1.4em;
+}
+/* 
+.accessories {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.accessories label {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  color: #333;
+} */
+
+/* .accessories input[type="checkbox"] {
+  margin-right: 10px;
+} */
+
+.features-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  margin: 3em;
+}
+
+.feature-item {
+  text-align: center;
+  width: 100px; /* Adjust as needed */
+}
+
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  color: #333;
+  margin: 5px 0;
+}
+
+span {
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 3px;
+}
+
+.specifications {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.specifications li {
+  background: #f4f4f4;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  border-radius: 5px;
+  font-size: 1em;
+  color: #333;
+}
+
+.zoomable {
+  $parentSelector: &;
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  box-shadow: 4px 4px 8px rgba(#000, 0.2);
+
+  &__img {
+      transform-origin: var(--zoom-pos-x, 0%) var(--zoom-pos-y, 0%);
+      transition: transform 0.15s linear;
+  }
+
+  &--zoomed {
+      #{$parentSelector}__img {
+          cursor: zoom-in;
+          transform: scale(var(--zoom, 2));
+      }
+  }
 }
 

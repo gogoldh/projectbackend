@@ -5,13 +5,15 @@ include_once (__DIR__ . "/classes/Db.php");
 function fetchProducts(){
     $conn = Db::getConnection();
     $statement = $conn->prepare('   
-        SELECT p.title, p.price, pi.image_url, pi.alt_text
+        SELECT p.product_id, p.title, p.price, pi.image_url, pi.alt_text, b.name AS brand_name
         FROM products p
         LEFT JOIN product_images pi ON p.product_id = pi.product_id
+        LEFT JOIN brand b ON p.brand_id = b.id
         WHERE pi.alt_text LIKE "%side view%"
 ');
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
+    
 }    
 
 $products = fetchProducts();
@@ -23,21 +25,29 @@ $products = fetchProducts();
     <title>EUCSHOP</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="script.js"></script>
-    <link rel="icon" type="image/x-icon" href="images/inmotion_V14_50S.webp">
+    <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' rel='stylesheet' />
+    <!-- Styling voor bg text product cards -->
+    <style>
+    <?php foreach ($products as $product): ?>
+    .card-<?php echo htmlspecialchars($product['product_id']); ?>:after {
+        content: "<?php echo htmlspecialchars($product['brand_name']); ?>";
+        position: absolute;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        text-align: center;
+        transform-origin: center center;
+    }
+    <?php endforeach; ?>
+</style>
 </head>
 <body>
     <?php include_once("nav.inc.php")?>
     <main>
-    <div class="scroller">
-    </div>
-    <div class="progress-wrap">
-      <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-      </svg>
-  </div>
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
   <script src="script.js"></script>
+  <!-- ITEM TEMPLATE -->
         <!-- <div class="collection">
             <h2 class="collection__title">Electric Unicycles</h2>
             <div class="collection__items">
@@ -52,10 +62,10 @@ $products = fetchProducts();
 
         <div class="container">
 
-        <?php foreach ($products as $product): ?>
-        <div class="card">
+        <?php foreach ($products as $product):?>
+        <div class="card card-<?php echo htmlspecialchars($product['product_id']); ?>">
             <div class="imgBx">
-                <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="Inmotion V14 50S">
+                <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['alt_text']); ?>">
             </div>
 
             <div class="contentBx">
@@ -65,12 +75,9 @@ $products = fetchProducts();
                 <div class="color">
 
                     <h3>Price: $<?php echo htmlspecialchars($product['price']); ?></h3>
-                    <span></span>
-                    <span></span>
-                    <span></span>
                 </div>
-                <a href="details.php">Buy Now</a>
-            </div>
+                <a href="details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">Buy Now</a>
+                </div>
         </div>
         <?php endforeach; ?>
      

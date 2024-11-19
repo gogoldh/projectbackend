@@ -16,9 +16,9 @@ session_start();
 
 <div id="nav__wrapper">
     <div class="dropdown">
-    <button class="dropbtn">Electric Unicycles
+    <a href="index.php" class="dropbtn">Electric Unicycles
       <i class="fa fa-caret-down"></i>
-    </button>
+    </a>
     <div class="dropdown-content">
       <a href="#inmotion">Inmotion</a>
       <a href="#Kingsong">Kingsong</a>
