@@ -888,3 +888,17 @@ span {
 .errors p {
   margin: 0;
 }
+
+.feedback {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+
+.feedback--available {
+  color: green;
+}
+
+.feedback--unavailable {
+  color: red;
+}

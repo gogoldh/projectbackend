@@ -40,4 +40,17 @@ class User {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+        //static method that checks if a usernname is available (table users, column username)
+        public static function isEmailAvailable($email) {
+            $conn = Db::getConnection(); // Corrected method to get the database connection
+            $statement = $conn->prepare("SELECT * FROM user WHERE email = :email");
+            $statement->bindValue(":email", $email);
+            $statement->execute();
+            if ($statement->rowCount() === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 }
