@@ -784,24 +784,107 @@ span {
   color: #333;
 }
 
-.zoomable {
-  $parentSelector: &;
-
-  position: relative;
-  overflow: hidden;
-  border-radius: 30px;
-  box-shadow: 4px 4px 8px rgba(#000, 0.2);
-
-  &__img {
-      transform-origin: var(--zoom-pos-x, 0%) var(--zoom-pos-y, 0%);
-      transition: transform 0.15s linear;
-  }
-
-  &--zoomed {
-      #{$parentSelector}__img {
-          cursor: zoom-in;
-          transform: scale(var(--zoom, 2));
-      }
-  }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 
+.pagination a {
+  margin: 0 5px;
+  padding: 10px 20px;
+  background: #f4f4f4;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.pagination a:hover {
+  background: #ddd;
+}
+
+/* Products per page filter styling */
+.pages {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pages label {
+  margin-right: 10px;
+  font-size: 1em;
+}
+
+.pages select {
+  padding: 5px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.admin-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-form h2 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.admin-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: #333;
+}
+
+.admin-form input[type="text"],
+.admin-form input[type="number"],
+.admin-form select.styled-select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.admin-form button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #f4f4f4;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.admin-form button:hover {
+  background: #ddd;
+}
+
+.admin_body {
+  background-color: var(--black);
+}
+
+.errors {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.errors p {
+  margin: 0;
+}

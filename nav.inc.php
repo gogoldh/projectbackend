@@ -20,10 +20,12 @@ session_start();
       <i class="fa fa-caret-down"></i>
     </a>
     <div class="dropdown-content">
-      <a href="#inmotion">Inmotion</a>
-      <a href="#Kingsong">Kingsong</a>
-      <a href="#Veteran">Veteran</a>
-      <a href="#Begode">Begode</a>
+        <a href="index.php?brand=Inmotion">Inmotion</a>
+        <a href="index.php?brand=Kingsong">Kingsong</a>
+        <a href="index.php?brand=Leaperkim">Leaperkim</a>
+        <a href="index.php?brand=Begode">Begode</a>
+        <a href="index.php?brand=Nosfet">Nosfet</a>
+
     </div>
   </div>
     <a href="#">Sale</a>

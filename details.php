@@ -1,13 +1,11 @@
 <?php
 include_once (__DIR__ . "/classes/Db.php");
 
-// Sanitize and validate the id
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if ($id === false) {
     die('Invalid product ID');
 }
 
-// Fetch product details
 function fetchProduct($id) {
     $conn = Db::getConnection();
     $statement = $conn->prepare('

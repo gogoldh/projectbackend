@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form__field">
                     <button type="submit" class="btn btn--primary">Sign Up</button>
 					<div class="form_screenswitch">
-					<p>Aleady Signed up?<a href="signup.php" class="screenswitch">
+					<p>Aleady Signed up?<a href="login.php" class="screenswitch">
 					Log in!</p>
                 </div>
             </form>
