@@ -127,7 +127,6 @@ a {
   font-size: 0.8em;
   text-decoration: none;
   display: inline-block;
-  margin-right: 2em;
 }
 
 .nav__search
@@ -978,35 +977,135 @@ span {
   background-color: #e7581a;
 }
 
-.image-preview {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  margin: 5px;
-}
-
-.image-field {
-  display: inline-block;
-  vertical-align: top;
-  margin: 10px;
-}
-
 .image-url, .alt-text {
   display: block;
   margin-top: 5px;
 }
 
-.btn-delete, .btn-add {
-  display: block;
-  margin-top: 5px;
-  padding: 5px 10px;
-  background-color: #e74c3c;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+/* Profile Button */
+.profile {
+  position: relative;
+  display: inline-block;
 }
 
-.btn-delete:hover, .btn-add:hover {
-  background-color: #c0392b;
+.profile__button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  width: 8em;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.profile__button i {
+  margin-right: 8px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.profile__dropdown {
+  display: none;
+  position: absolute;
+  background-color: var(--black);
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 9999; /* Ensure the dropdown appears above other elements */
+  border-radius: 5px;
+  border: 1px solid var(--orange);
+}
+
+/* Links inside the dropdown */
+.profile__dropdown a {
+  color: var(--orange);
+  padding: 12px 12px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  width: 8em;
+}
+
+/* Change color of dropdown links on hover */
+.profile__dropdown a:hover {
+  background-color: var(--orange);
+  color: var(--black);
+}
+
+/* Show the dropdown menu on hover */
+.profile:hover .profile__dropdown {
+  display: block;
+}
+
+/* Change the background color of the profile button when the dropdown content is shown */
+.profile:hover .profile__button {
+  background-color: var(--orange);
+}
+
+/* Profile Page Styles */
+.profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--black);
+  border-radius: 10px;
+  border: 1px solid var(--orange);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 15em;
+}
+
+.profile-container h1 {
+  text-align: center;
+  color: var(white);
+  margin-bottom: 20px;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form .form-group {
+  margin-bottom: 15px;
+}
+
+.profile-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.profile-form .form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--orange);
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--text-color);
+  background-color: var(--black);
+}
+
+.profile-form .form-group input:focus {
+  border-color: var(--orange);
+  outline: none;
+}
+
+.profile-form .btn-update {
+  padding: 10px 20px;
+  background-color: var(--black);
+  color: var(--white);
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.profile-form .btn-update:hover {
+  background-color: var(--black);
+}
+
+.body_profile {
+  background-color: var(--black);
 }

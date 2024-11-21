@@ -13,7 +13,9 @@ function canLogin($p_email, $p_password){
         $hash = $user['password'];
         if(password_verify($p_password, $hash)){
             // Set session variables on successful login
-            $_SESSION['user'] = $user;
+            $_SESSION['id'] = $user['id']; // Store user ID in session
+            $_SESSION['fname'] = $user['fname']; // Store user first name in session
+
             if ($user['role'] === 'admin') {
                 header("Location: admin.php");
             } else {
@@ -39,29 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = true; // If login fails, show the error
     }
 }
-
-
-// function canLogin($p_email, $p_password){
-//     $conn = Db::getConnection();
-//     $statement = $conn->prepare('SELECT * FROM user WHERE email = :email');
-//     $statement->bindValue(':email', $p_email);
-//     $statement->execute();
-
-//     $user = $statement->fetch(PDO::FETCH_ASSOC);
-//     if($user){
-//         $hash = $user['password'];
-//         if(password_verify($p_password, $hash)){
-//             // Set session variables on successful login
-//             $_SESSION['user'] = $user;
-//             header("Location: index.php");
-//             exit;
-//         } else {
-//             return false; // wrong password
-//         }
-//     } else {
-//         return false; // No user Account
-//     }
-// }
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

@@ -49,10 +49,11 @@ $products = fetchProducts($brand, $search, $page, $limit); // Pass brand, search
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EUCSHOP</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="script.js"></script>
     <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' rel='stylesheet' />
-    <!-- Styling voor bg text product cards -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src="script.js"></script>
+    
     <style>
     <?php foreach ($products as $product): ?>
     .card-<?php echo htmlspecialchars($product['product_id']); ?>:after {

@@ -1,27 +1,40 @@
 <?php
-include_once (__DIR__ . "/classes/user.php");
-
-$errors = [];
+include_once (__DIR__ . "/classes/Db.php");
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
     $email = $_POST['email'];
-    
-    // Check if email already exists
-    $conn = Db::getConnection();
-    $statement = $conn->prepare('SELECT COUNT(*) FROM user WHERE email = :email');
-    $statement->bindParam(':email', $email, PDO::PARAM_STR);
-    $statement->execute();
-    $count = $statement->fetchColumn();
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    if ($count > 0) {
-        $errors[] = "An account with this email address already exists.";
-    } else {
-        $user = new User();
-        $user->setEmail($email);
-        $user->setPassword($_POST['password']);
-        $user->setFname($_POST['fname']);
-        $user->setLname($_POST['lname']);
-        $user->save();
+    try {
+        // Establish a database connection using PDO
+        $conn = Db::getConnection();
+
+        // Prepare the SQL query to insert user data
+        $statement = $conn->prepare('INSERT INTO user (fname, lname, email, password) VALUES (:fname, :lname, :email, :password)');
+        $statement->bindParam(':fname', $fname, PDO::PARAM_STR);
+        $statement->bindParam(':lname', $lname, PDO::PARAM_STR);
+        $statement->bindParam(':email', $email, PDO::PARAM_STR);
+        $statement->bindParam(':password', $password, PDO::PARAM_STR);
+
+        // Execute the insert query
+        $statement->execute();
+
+        // Get the last inserted ID
+        $user_id = $conn->lastInsertId();
+
+        // Set session variables
+        $_SESSION['id'] = $user_id;
+        $_SESSION['fname'] = $fname;
+
+        // Redirect to profile page
+        header("Location: index.php");
+        exit;
+    } catch (PDOException $e) {
+        // Handle any database connection or query errors
+        echo "Database error: " . $e->getMessage();
     }
 }
 ?><!DOCTYPE html>
