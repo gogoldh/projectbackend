@@ -52,110 +52,99 @@ function fetchProductSpecifications($id) {
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
-$product = fetchProduct($id);
-if (!$product) {
-    die('Product not found');
+// Fetch product reviews
+function fetchProductReviews($id) {
+    $conn = Db::getConnection();
+    $statement = $conn->prepare('SELECT r.rating, r.comment_text, r.created_at, u.fname AS user_name
+        FROM reviews r
+        LEFT JOIN user u ON r.user_id = u.id
+        WHERE r.product_id = :id
+        ORDER BY r.created_at DESC');
+    $statement->bindParam(':id', $id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$images = fetchProductImages($id);
-$specifications = fetchProductSpecifications($id);
-?>
+// Add a review
+function addReview($product_id, $user_id, $rating, $comment_text) {
+    $conn = Db::getConnection();
+    $statement = $conn->prepare('INSERT INTO reviews (product_id, user_id, rating, comment_text, created_at)
+        VALUES (:product_id, :user_id, :rating, :comment_text, NOW())');
+    $statement->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $statement->bindParam(':rating', $rating, PDO::PARAM_INT);
+    $statement->bindParam(':comment_text', $comment_text, PDO::PARAM_STR);
+    $statement->execute();
+}
 
-<!DOCTYPE html>
+$product = fetchProduct($id);
+$productImages = fetchProductImages($id);
+$productSpecifications = fetchProductSpecifications($id);
+$productReviews = fetchProductReviews($id);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rating'], $_POST['comment_text'])) {
+    $user_id = $_SESSION['id']; // Assuming user ID is stored in session
+    $rating = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT);
+    $comment_text = filter_input(INPUT_POST, 'comment_text', FILTER_SANITIZE_STRING);
+    addReview($id, $user_id, $rating, $comment_text);
+    header("Location: details.php?id=$id");
+    exit;
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details page</title>
+    <title>Product Details</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
-
-    <!-- Script om te switchen tussen main images en thumbnails -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mainImage = document.querySelector('.main-image img');
-            const thumbnails = document.querySelectorAll('.thumbnail-images img');
-            let currentIndex = 0;
-
-            function updateMainImage(index) {
-                mainImage.src = thumbnails[index].src;
-                mainImage.alt = thumbnails[index].alt;
-            }
-
-            thumbnails.forEach((thumbnail, index) => {
-                thumbnail.addEventListener('click', function() {
-                    currentIndex = index;
-                    updateMainImage(currentIndex);
-                });
-            });
-
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'ArrowRight') {
-                    currentIndex = (currentIndex + 1) % thumbnails.length;
-                    updateMainImage(currentIndex);
-                } else if (event.key === 'ArrowLeft') {
-                    currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
-                    updateMainImage(currentIndex);
-                }
-            });
-        });
-    </script>
 </head>
-<body class="details">
+<body>
     <?php include_once("nav.inc.php")?>
-    <div class="product-container">
-        <!-- images -->
-        <div class="product-images zoomable">
-            <div class="main-image">
-                <img src="<?php echo htmlspecialchars($images[0]['image_url']); ?>" alt="<?php echo htmlspecialchars($product['title']); ?>">
-            </div>
-            <div class="thumbnail-images">
-                <?php foreach ($images as $image): ?>
-                    <img src="<?php echo htmlspecialchars($image['image_url']); ?>" alt="<?php echo htmlspecialchars($image['alt_text']); ?>">
-                <?php endforeach; ?>
-            </div>
+    <div class="product-details">
+        <h1><?php echo htmlspecialchars($product['title']); ?></h1>
+        <div class="product-images">
+            <?php foreach ($productImages as $image): ?>
+                <img src="<?php echo htmlspecialchars($image['image_url']); ?>" alt="<?php echo htmlspecialchars($image['alt_text']); ?>">
+            <?php endforeach; ?>
         </div>
-
-        <!-- info -->
-        <div class="product-details">
-            <h1><?php echo htmlspecialchars($product['brand_name']); ?> <?php echo htmlspecialchars($product['title']); ?></h1>
-            <p class="sale">SALE</p>
-            <p class="price">$<?php echo htmlspecialchars($product['price']); ?></p>
-            <p class="stock-status">In stock! Ships next business day.</p>
-            <p class="shipping-info">Free shipping for black friday</p>
-
-            <!-- buttons -->
-            <div class="quantity">
-                <button>-</button>
-                <input type="number" value="1" min="1">
-                <button>+</button>
-            </div>
-            <button class="add_to_cart">Add to cart</button>
-            <button class="buy_now">Buy now</button>
-
-            <!-- specifications -->
+        <div class="product-specifications">
             <h2>Specifications</h2>
-            <ul class="specifications">
-            <?php foreach ($specifications as $key => $value): ?>
-                    <?php if ($key != 'product_id'): ?>
-                        <li><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $key))); ?>: <?php echo htmlspecialchars($value); ?></li>
-                    <?php endif; ?>
+            <ul>
+                <?php foreach ($productSpecifications as $key => $value): ?>
+                    <li><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $key))); ?>: <?php echo htmlspecialchars($value); ?></li>
                 <?php endforeach; ?>
             </ul>
-
-            <!-- extra -->
-            <!-- <h2>Accessories & Options</h2>
-            <div class="accessories">
-                <label>
-                    <input type="checkbox"> V13 Kickstand - $44.00
-                </label>
-                <label>
-                    <input type="checkbox"> V13 Street Tire Upgrade (Michelin Pilot 2 Tire and Install Labor) - $250.00
-                </label>
-                <label>
-                    <input type="checkbox"> 108V (126V Max) Adjustable Fast Charger - $325.00
-                </label>
-            </div> -->
+        </div>
+        <div class="product-reviews">
+            <h2>Reviews</h2>
+            <?php foreach ($productReviews as $review): ?>
+                <div class="review">
+                    <p><strong><?php echo htmlspecialchars($review['user_name']); ?></strong> (<?php echo htmlspecialchars($review['created_at']); ?>)</p>
+                    <p>Rating: <?php echo htmlspecialchars($review['rating']); ?>/5</p>
+                    <p><?php echo htmlspecialchars($review['comment_text']); ?></p>
+                </div>
+            <?php endforeach; ?>
+            <?php if (isset($_SESSION['id'])): ?>
+                <form method="POST" action="details.php?id=<?php echo $id; ?>">
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <select id="rating" name="rating" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment_text">Comment:</label>
+                        <textarea id="comment_text" name="comment_text" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Submit Review</button>
+                </form>
+            <?php else: ?>
+                <p>You must be logged in to add a review.</p>
+            <?php endif; ?>
         </div>
     </div>
 </body>

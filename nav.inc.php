@@ -14,8 +14,10 @@ if (isset($_SESSION['id'])) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     $fname = htmlspecialchars($user['fname']);  
+    $isLoggedIn = true;
 } else {
     $fname = 'Guest';
+    $isLoggedIn = false;
 }
 ?>
 <nav class="navbar">
@@ -33,8 +35,12 @@ if (isset($_SESSION['id'])) {
                 <i class="fa fa-user"></i> <?php echo $fname; ?>
             </a>
             <div class="profile__dropdown">
-                <a href="profile.php">Profile</a>
-                <a href="logout.php">Logout</a>
+                <?php if ($isLoggedIn): ?>
+                    <a href="profile.php">Profile</a>
+                    <a href="logout.php">Logout</a>
+                <?php else: ?>
+                    <a href="login.php">Login</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

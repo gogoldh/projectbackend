@@ -76,8 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 				<div class="form_screenswitch">
 					<p>Not signed up yet? <a href="signup.php" class="screenswitch">
-						
 					sign up!</p>
+                    <a href="index.php" class="screenswitch">Just want to browse?</a>
+
 				</div>
 			</form>
 		</div>

@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit" class="btn btn--primary">Sign Up</button>
                     <div class="form_screenswitch">
                         <p>Already Signed up? <a href="login.php" class="screenswitch">Log in!</a></p>
+                        <a href="index.php" class="screenswitch">Just want to browse?</a>
                     </div>
                 </div>
             </form>
