@@ -7,6 +7,7 @@
 :root {
   --black: #232323;
   --orange: #ff6622;
+  --white: #fff;
 }
 
 .hidden
@@ -1248,4 +1249,227 @@ input[type="range"]::-ms-thumb {
   background: var(--orange);
   cursor: pointer;
   border-radius: 50%;
+}
+
+/* Reviews Section */
+.product-reviews {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: var(--black);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-reviews h2 {
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.review {
+  padding: 15px;
+  border-bottom: 1px solid var(--orange);
+}
+
+.review:last-child {
+  border-bottom: none;
+}
+
+.review p {
+  margin: 5px 0;
+  color: var(--white);
+}
+
+.review strong {
+  color: var(--white);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--white);
+  font-weight: bold;
+}
+
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--orange);
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--white);
+  background-color: var(--black);
+}
+
+.form-group textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.btn-submit {
+  padding: 10px 20px;
+  background-color: var(--black);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: var(--orange);
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+.star-rating label {
+  font-size: 30px;
+  color: var(--white);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: var(--orange);
+}
+
+/* Star Rating */
+.star-rating {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+.star-rating label {
+  font-size: 30px;
+  color: var(--white);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: var(--orange);
+}
+
+.star-rating .star {
+  font-size: 20px;
+  color: var(--white);
+}
+
+.star-rating .star.filled {
+  color: var(--orange);
+}
+
+/* Cart Page */
+.cart-container {
+  max-width: 800px;
+  margin: 10em auto;
+  padding: 20px;
+  background-color: var(--black);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid white;
+}
+
+.cart-container h2 {
+  color: var(--white);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 10px;
+  border: 1px solid var(--orange);
+  text-align: center;
+  color: var(--white);
+}
+
+.cart-table th {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.cart-table td input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid var(--orange);
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--text-color);
+  background-color: var(--black);
+}
+
+.btn-continue,
+.btn-update,
+.btn-remove,
+.btn-checkout {
+  padding: 10px 20px;
+  background-color: var(--black);
+  color: var(--white);
+  border: 1px solid var(--orange);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px;
+}
+
+.btn-continue:hover,
+.btn-update:hover,
+.btn-remove:hover,
+.btn-checkout:hover {
+  background-color: var(--orange);
+}
+
+/* Empty Cart */
+.empty-cart {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.empty-cart p {
+  font-size: 20px;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cart_bg {
+  background-color: var(--black);
 }

@@ -27,7 +27,7 @@ if (isset($_SESSION['id'])) {
         <form action="" method="get">
             <input type="text" name="search" class="nav__search">
         </form>
-        <a href="mylist.php">Cart</a>
+        <a href="cart.php">Cart</a>
         
         <!-- Profile Button with Dropdown -->
         <div class="profile">
