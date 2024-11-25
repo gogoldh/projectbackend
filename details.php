@@ -278,6 +278,7 @@ if (isset($_POST['add_to_cart'])) {
             </div>
             <button class="add_to_cart">Add to cart</button>
             <button class="buy_now">Buy now</button>
+            
         
            
     <h2>Specifications</h2>

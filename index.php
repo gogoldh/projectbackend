@@ -178,21 +178,34 @@ $brands = fetchBrands(); // Fetch brands from the database
 </div>
         <div class="container">
             <?php foreach ($products as $product): ?>
-            <div class="card card-<?php echo htmlspecialchars($product['product_id']); ?> brand-<?php echo htmlspecialchars(str_replace(' ', '-', strtolower($product['brand_name']))); ?>" data-top-speed="<?php echo htmlspecialchars($product['top_speed']); ?>" data-weight="<?php echo htmlspecialchars($product['weight']); ?>" data-motor-power="<?php echo htmlspecialchars($product['motor_power']); ?>" data-range-per-charge="<?php echo htmlspecialchars($product['range_per_charge']); ?>" data-wheel-size="<?php echo htmlspecialchars($product['wheel_size']); ?>">
-                <div class="imgBx">
-                    <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['alt_text']); ?>">
-                </div>
-                <div class="contentBx">
-                    <h2><?php echo htmlspecialchars($product['title']); ?></h2>
-                    <div class="color">
-                        <h3>Price: $<?php echo htmlspecialchars($product['price']); ?></h3>
-                    </div>
-                    <a href="details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">Buy Now</a>
-                </div>
-            </div>
+                <div class="card card-<?php echo htmlspecialchars($product['product_id']); ?>" data-product-id="<?php echo htmlspecialchars($product['product_id']); ?>" data-product-title="<?php echo htmlspecialchars($product['title']); ?>">
+    <div class="imgBx">
+        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['alt_text']); ?>">
+    </div>
+    <div class="contentBx">
+        <h2><?php echo htmlspecialchars($product['title']); ?></h2>
+        <div class="color">
+            <h3>Price: $<?php echo htmlspecialchars($product['price']); ?></h3>
+        </div>
+        <a href="details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">Buy Now</a>
+        <button class="compare-btn" data-product-id="<?php echo $product['product_id']; ?>">Compare</button>
+    </div>
+</div>
             <?php endforeach; ?>
         </div>
     </main>
+    <div id="comparePopupButton">
+    Compare (0)
+</div>
+
+<div id="comparePopup" class="popup hidden">
+    <div class="popup-content">
+        <h2>Selected Products</h2>
+        <ul id="selectedProductsList"></ul>
+        <button id="compareNowBtn" class="btn-compare-now" disabled>Compare Now</button>
+        <button id="closePopupBtn" class="btn-close-popup">Close</button>
+    </div>
+</div>
     <form method="get" action="" class="pages">
         <label for="limit">Products per page:</label>
         <select name="limit" id="limit" onchange="this.form.submit()">
@@ -289,6 +302,99 @@ $brands = fetchBrands(); // Fetch brands from the database
     });
 });
         
+
+document.addEventListener('DOMContentLoaded', function () {
+    const compareBtns = document.querySelectorAll('.compare-btn');
+    const comparePopup = document.getElementById('comparePopup');
+    const selectedProductsList = document.getElementById('selectedProductsList');
+    const compareNowBtn = document.getElementById('compareNowBtn');
+    const closePopupBtn = document.getElementById('closePopupBtn');
+    const comparePopupButton = document.getElementById('comparePopupButton');
+
+    // Array to store selected product details
+    let selectedProducts = JSON.parse(localStorage.getItem('selectedProducts')) || [];
+
+    // Function to update the popup
+    function updatePopup() {
+        selectedProductsList.innerHTML = '';
+        selectedProducts.forEach(product => {
+            const productItem = document.createElement('li');
+            productItem.textContent = product.name;
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove';
+            removeBtn.className = 'btn-remove';
+            removeBtn.addEventListener('click', () => removeProduct(product.id));
+            productItem.appendChild(removeBtn);
+            selectedProductsList.appendChild(productItem);
+        });
+        compareNowBtn.disabled = selectedProducts.length !== 2;
+        comparePopupButton.textContent = `Compare (${selectedProducts.length})`; // Update floating button text
+    }
+
+    // Function to add a product to the selection
+    function addProduct(productId) {
+        const productCard = document.querySelector(`.card-${productId}`);
+        const productName = productCard.getAttribute('data-product-title');
+        if (selectedProducts.length < 2 && !selectedProducts.some(product => product.id === productId)) {
+            selectedProducts.push({ id: productId, name: productName });
+            localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+            updatePopup();
+        }
+        if (selectedProducts.length === 2) {
+            alert('You can now compare products.');
+        }
+    }
+
+    // Function to remove a product from the selection
+    function removeProduct(productId) {
+        selectedProducts = selectedProducts.filter(product => product.id !== productId);
+        localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+        updatePopup();
+    }
+
+    // Function to show the popup
+    function showPopup() {
+        comparePopup.style.display = 'block';
+        updatePopup();
+    }
+
+    // Function to hide the popup
+    function hidePopup() {
+        comparePopup.style.display = 'none';
+    }
+
+    // Event listener for compare buttons
+    compareBtns.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+            addProduct(productId);
+        });
+    });
+
+    // Event listener for Compare Now button
+    compareNowBtn.addEventListener('click', function () {
+        if (selectedProducts.length === 2) {
+            const compareUrl = `compare.php?product1=${selectedProducts[0].id}&product2=${selectedProducts[1].id}`;
+            window.location.href = compareUrl;
+        }
+    });
+
+    // Event listener for Close Popup button
+    closePopupBtn.addEventListener('click', hidePopup);
+
+    // Close popup if clicked outside the content
+    window.addEventListener('click', function (event) {
+        if (event.target === comparePopup) {
+            hidePopup();
+        }
+    });
+
+    // Initialize the popup with any existing selected products
+    if (selectedProducts.length > 0) {
+        updatePopup();
+    }
+});
     </script>
 </body>
 </html>

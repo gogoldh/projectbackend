@@ -228,6 +228,9 @@ background-position: 0 50%;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1003;
+  display: hidden;
+  grid-template-rows: repeat(4, 1fr);
+  align-items: center;
 }
 
 
@@ -238,6 +241,8 @@ background-position: 0 50%;
   display: block;
   text-align: left;
   color: white;
+  text-align: center;
+  left: 50%;
 }
 
 
@@ -247,7 +252,7 @@ background-position: 0 50%;
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+  display: grid;
 }
 
 /* .nav__wrapper a:hover
@@ -255,6 +260,13 @@ background-position: 0 50%;
   background-color: var(--orange);
 } */
 
+/* .container .card .contentBx button.compare-btn {
+  color: var(--orange);
+  background-color: rgba(0,0,0,0);
+  display: block;
+  padding: 0;
+  align-self: center;
+} */
 
 .container {
   position: relative;
@@ -430,6 +442,8 @@ background-position: 0 50%;
   transform: translateY(0px);
   transition-delay: .7s;
 } 
+
+
 
 @media screen and (max-width: 124em){
   .container {
@@ -1327,7 +1341,7 @@ input[type="range"]::-ms-thumb {
 
 .star-rating {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   justify-content: center;
 }
 
@@ -1470,6 +1484,7 @@ input[type="range"]::-ms-thumb {
   margin-top: 20px;
 }
 
+/* .bg_compare, */
 .bg_confirmation,
 .cart_bg {
   background-color: var(--black);
@@ -1538,4 +1553,93 @@ input[type="range"]::-ms-thumb {
 }
 .btn-continue:hover {
   background-color: var(--orange);
+}
+
+/* Floating Button */
+#comparePopupButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--orange);
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+#comparePopupButton:hover {
+  transform: scale(1.1);
+}
+
+/* Hidden Popup */
+#comparePopup.hidden {
+  display: none;
+}
+
+#comparePopup {
+  position: fixed;
+  bottom: 80px; /* Adjust to position above the floating button */
+  right: 20px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  z-index: 1001; /* Higher than the button */
+}
+
+/* Popup Content */
+.popup-content h2 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.selected-products-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.selected-products-list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.btn-compare-now,
+.btn-close-popup {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-compare-now {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-compare-now:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.btn-close-popup {
+  background-color: #dc3545;
+  color: white;
+}
+
+
+#comparePopup li {
+  color: var(--black);
 }

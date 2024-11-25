@@ -60,6 +60,6 @@ if (isset($_SESSION['id'])) {
         </div>
     </div>
     <a href="#">Sale</a>
-    <a href="#">Accessories</a>
+    <a href="javascript:void(0);" id="compare-nav-button">Compare</a>
     <a href="#">Support</a>
 </div>
