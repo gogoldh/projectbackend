@@ -44,6 +44,7 @@ $total_price = $order_details[0]['total_price'];
     <title>Order Confirmation</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<?php include_once("nav.inc.php") ?>
 <body class="body_confirmation">
     <a href="index.php" class="btn-continue" style="margin: 20px;">Continue Shopping</a>
     <div class="container_confirmation">

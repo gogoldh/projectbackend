@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" name="password" required>
                 </div>
                 <div class="form__field">
-                    <button type="submit" class="btn btn--primary">Sign Up</button>
+                    <button type="submit" class="btn btn--primary" id="signUp">Sign Up</button>
                     <div class="form_screenswitch">
                         <p>Already Signed up? <a href="login.php" class="screenswitch">Log in!</a></p>
                         <a href="index.php" class="screenswitch">Just want to browse?</a>
@@ -100,14 +100,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .then(result => {
                 console.log(result);
                 const feedback = document.querySelector('.feedback');
+                const signUp = document.querySelector('#signUp');
                 if(result.available == true){
                     feedback.textContent = 'This email is available';
                     feedback.classList.remove('feedback--unavailable');
                     feedback.classList.add('feedback--available');
+                    signUp.disabled = false;
                 } else {
                     feedback.textContent = 'This email is already taken';
                     feedback.classList.remove('feedback--available');
                     feedback.classList.add('feedback--unavailable');
+                    signUp.disabled = true;
                 }
             })
             .catch(error => console.error('Error:', error));

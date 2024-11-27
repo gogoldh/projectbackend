@@ -1265,7 +1265,7 @@ input[type="range"]::-ms-thumb {
   border-radius: 50%;
 }
 
-/* Reviews Section */
+
 .product-reviews {
   margin-top: 40px;
   padding: 20px;
@@ -1642,4 +1642,54 @@ input[type="range"]::-ms-thumb {
 
 #comparePopup li {
   color: var(--black);
+}
+
+.compare-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.compare-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 50em;
+  padding: 20px;
+  text-align: center;
+}
+
+
+
+
+.compare-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.compare-card p {
+  text-align: left;
+  background-color: #ddd;
+  padding: 1em;
+}
+
+.compare-card h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: var(--black);
+}
+
+.compare-card .contentBx .color h3 {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.compare-card  p {
+  margin: 5px 0;
+  font-size: 1em;
+  color: #333;
 }

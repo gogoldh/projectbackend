@@ -200,10 +200,10 @@ $brands = fetchBrands(); // Fetch brands from the database
 
 <div id="comparePopup" class="popup hidden">
     <div class="popup-content">
+        <span id="closePopupBtn" class="close-popup-button">&times;</span>
         <h2>Selected Products</h2>
         <ul id="selectedProductsList"></ul>
         <button id="compareNowBtn" class="btn-compare-now" disabled>Compare Now</button>
-        <button id="closePopupBtn" class="btn-close-popup">Close</button>
     </div>
 </div>
     <form method="get" action="" class="pages">
@@ -341,7 +341,9 @@ document.addEventListener('DOMContentLoaded', function () {
             updatePopup();
         }
         if (selectedProducts.length === 2) {
-            alert('You can now compare products.');
+            // alert('You can now compare products.');
+
+            // Maak hier een pop up voor de gebruiker
         }
     }
 
@@ -354,13 +356,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to show the popup
     function showPopup() {
-        comparePopup.style.display = 'block';
+        comparePopup.classList.remove('hidden');
         updatePopup();
     }
 
     // Function to hide the popup
     function hidePopup() {
-        comparePopup.style.display = 'none';
+        comparePopup.classList.add('hidden');
     }
 
     // Event listener for compare buttons
@@ -369,6 +371,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const productId = this.getAttribute('data-product-id');
             addProduct(productId);
+            showPopup();
         });
     });
 
@@ -377,7 +380,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (selectedProducts.length === 2) {
             const compareUrl = `compare.php?product1=${selectedProducts[0].id}&product2=${selectedProducts[1].id}`;
             window.location.href = compareUrl;
+        } else {
+            // alert('Please select 2 products to compare.');
+            // Schrijf hier nog een pop up voor de gebruiker
+
+
         }
+    });
+
+    // Event listener for Compare Popup button
+    comparePopupButton.addEventListener('click', function () {
+        showPopup();
     });
 
     // Event listener for Close Popup button
