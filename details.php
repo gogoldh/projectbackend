@@ -23,13 +23,13 @@ if ($id === false) {
 // }
 
 // Fetch product images
-function fetchProductImages($id) {
-    $conn = Db::getConnection();
-    $statement = $conn->prepare('SELECT image_url, alt_text FROM product_images WHERE product_id = :id');
-    $statement->bindParam(':id', $id, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-}
+// function fetchProductImages($id) {
+//     $conn = Db::getConnection();
+//     $statement = $conn->prepare('SELECT image_url, alt_text FROM product_images WHERE product_id = :id');
+//     $statement->bindParam(':id', $id, PDO::PARAM_INT);
+//     $statement->execute();
+//     return $statement->fetchAll(PDO::FETCH_ASSOC);
+// }
 
 // Fetch product specifications
 // function fetchProductSpecifications($id) {

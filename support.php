@@ -13,15 +13,14 @@ session_start(); // Ensure session is started
 <body>
     <?php include_once("nav.inc.php") ?>
 
-    <main>
-        <div class="container">
-            <h2>Support</h2>
+    <main class="bg_compare">
+    <div class="container_support">
             <div class="support_form">
                 <form action="submit_support.php" method="post">
                     <?php if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']): ?>
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" class="form__field"required>
+                            <input type="text" id="name" name="name" class="form__field" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email:</label>
@@ -42,16 +41,47 @@ session_start(); // Ensure session is started
             <div class="support_faq">
                 <h2>Frequently Asked Questions</h2>
                 <div class="faq_item">
-                    <h3>Question 1</h3>
-                    <p>Answer to question 1.</p>
+                    <h3 class="faq_question">What happens after delivery?</h3>
+                    <div class="faq_answer">
+                        <p>You won't receive your wheel, and we'll keep all your money.</p>
+                    </div>
                 </div>
                 <div class="faq_item">
-                    <h3>Question 2</h3>
-                    <p>Answer to question 2.</p>
+                    <h3 class="faq_question">When do i receive my wheel?</h3>
+                    <div class="faq_answer">
+                        <p>NEVER!</p>
+                    </div>
                 </div>
-                <!-- Add more FAQ items as needed -->
+                <div class="faq_item">
+                    <h3 class="faq_question">Who made this project possible?</h3>
+                    <div class="faq_answer">
+                        <p>me xo</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+        </main>
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq_question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                this.classList.remove('active');
+            } else {
+                faqQuestions.forEach(q => {
+                    q.nextElementSibling.style.maxHeight = null;
+                    q.classList.remove('active');
+                });
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                this.classList.add('active');
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

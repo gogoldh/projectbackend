@@ -197,7 +197,7 @@ $brands = Brand::fetchBrands(); // Fetch brands from the database
             <h3>Price: $<?php echo htmlspecialchars($product['price']); ?></h3>
         </div>
         <a href="details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">Buy Now</a>
-        <button class="compare-btn" data-product-id="<?php echo $product['product_id']; ?>">Compare</button>
+        <a href ="#" class="compare-btn" data-product-id="<?php echo $product['product_id']; ?>">Compare</a>
     </div>
 </div>
             <?php endforeach; ?>

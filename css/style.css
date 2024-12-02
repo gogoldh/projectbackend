@@ -436,6 +436,7 @@ background-position: 0 50%;
   opacity: 0;
   transform: translateY(50px);
   transition: .5s;
+  cursor: pointer;
 }
 
 .container .card:hover .contentBx a {
@@ -1486,6 +1487,7 @@ input[type="range"]::-ms-thumb {
 }
 
 /* .bg_compare, */
+.bg_compare,
 .bg_confirmation,
 .cart_bg {
   background-color: var(--black);
@@ -1686,7 +1688,7 @@ input[type="range"]::-ms-thumb {
 
 .compare-card .contentBx .color h3 {
   font-size: 1.2em;
-  color: #333;
+  color: var(--black);
 }
 
 .compare-card  p {
@@ -1695,65 +1697,71 @@ input[type="range"]::-ms-thumb {
   color: #333;
 }
 
+.container_support {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+}
+
+/* .support_form {
+  background-color: var(--black);
+  padding: 2em;
+  border-radius: 8px;
+  width: 60%;
+
+} */
+
+.support_faq,
 .support_form {
-  width: 50%;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: var(--white);
   color: var(--black);
-}
-
-.support_form .form-group {
-  margin-bottom: 15px;
-}
-
-.support_form .form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.support_form .form-group input,
-.support_form .form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.support_form .btn:hover {
-  background-color: var(--orange);
-}
-
-/* Support FAQ */
-.support_faq {
-  color: var(--black);
-  width: 50%;
+  width: 60%;
   margin: 20px auto;
-  background-color: #fff;
+  background-color: var(--black);
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid var(--orange);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .support_faq h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: var(--white);
 }
 
-.support_faq .faq_item {
-  margin: 10px 0;
+.faq_item {
+  margin: 15px 0;
 }
 
-.support_faq .faq_item h3 {
+.faq_question {
   margin: 0;
   font-size: 1.2em;
   font-weight: bold;
+  color: var(--black);
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid var(--black);
+  border-radius: 8px;
+  background-color: var(--white);
+  transition: background-color 0.3s ease;
 }
 
-.support_faq .faq_item p {
-  margin: 5px 0 0 0;
+.faq_question:hover,
+.faq_question.active {
+  background-color: var(--orange);
+}
+
+.faq_answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 10px;
+  
+  border-radius: 8px 8px 8px 8px;
+  background-color: var(--white);
+}
+
+.faq_answer p {
+  margin: 10px 0;
   font-size: 1em;
+  color: var(--black);
 }
