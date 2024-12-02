@@ -1,87 +1,93 @@
 <?php
 include_once (__DIR__ . "/classes/Db.php");
+include_once (__DIR__ . "/classes/Product.php");
+include_once (__DIR__ . "/classes/Brand.php");
 
-function fetchProducts($brand = null, $search = null, $page = 1, $limit = 10, $filters = []){
-    $conn = Db::getConnection();
-    $offset = ($page - 1) * $limit;
-    $sql = '   
-        SELECT p.product_id, p.title, p.price, pi.image_url, pi.alt_text, b.name AS brand_name, s.top_speed, s.weight, s.motor_power, s.range_per_charge, s.wheel_size
-        FROM products p
-        LEFT JOIN product_images pi ON p.product_id = pi.product_id
-        LEFT JOIN brand b ON p.brand_id = b.id
-        LEFT JOIN specifications s ON p.product_id = s.product_id
-        WHERE pi.alt_text LIKE "%side view%"';
+
+// function fetchProducts($brand = null, $search = null, $page = 1, $limit = 10, $filters = []){
+//     $conn = Db::getConnection();
+//     $offset = ($page - 1) * $limit;
+//     $sql = '   
+//         SELECT p.product_id, p.title, p.price, pi.image_url, pi.alt_text, b.name AS brand_name, s.top_speed, s.weight, s.motor_power, s.range_per_charge, s.wheel_size
+//         FROM products p
+//         LEFT JOIN product_images pi ON p.product_id = pi.product_id
+//         LEFT JOIN brand b ON p.brand_id = b.id
+//         LEFT JOIN specifications s ON p.product_id = s.product_id
+//         WHERE pi.alt_text LIKE "%side view%"';
     
-    if ($brand) {
-        $sql .= ' AND b.name = :brand';
-    }
-    if ($search) {
-        $sql .= ' AND p.title LIKE :search';
-    }
-    if (!empty($filters)) {
-        if (isset($filters['top_speed'])) {
-            $sql .= ' AND s.top_speed >= :top_speed';
-        }
-        if (isset($filters['weight'])) {
-            $sql .= ' AND s.weight <= :weight';
-        }
-        if (isset($filters['motor_power'])) {
-            $sql .= ' AND s.motor_power >= :motor_power';
-        }
-        if (isset($filters['range_per_charge'])) {
-            $sql .= ' AND s.range_per_charge >= :range_per_charge';
-        }
-        if (isset($filters['wheel_size'])) {
-            $sql .= ' AND s.wheel_size >= :wheel_size';
-        }
-    }
+//     if ($brand) {
+//         $sql .= ' AND b.name = :brand';
+//     }
+//     if ($search) {
+//         $sql .= ' AND p.title LIKE :search';
+//     }
+//     if (!empty($filters)) {
+//         if (isset($filters['top_speed'])) {
+//             $sql .= ' AND s.top_speed >= :top_speed';
+//         }
+//         if (isset($filters['weight'])) {
+//             $sql .= ' AND s.weight <= :weight';
+//         }
+//         if (isset($filters['motor_power'])) {
+//             $sql .= ' AND s.motor_power >= :motor_power';
+//         }
+//         if (isset($filters['range_per_charge'])) {
+//             $sql .= ' AND s.range_per_charge >= :range_per_charge';
+//         }
+//         if (isset($filters['wheel_size'])) {
+//             $sql .= ' AND s.wheel_size >= :wheel_size';
+//         }
+//     }
 
-    $sql .= ' LIMIT :limit OFFSET :offset';
+//     $sql .= ' LIMIT :limit OFFSET :offset';
 
-    $statement = $conn->prepare($sql);
+//     $statement = $conn->prepare($sql);
     
-    if ($brand) {
-        $statement->bindParam(':brand', $brand, PDO::PARAM_STR);
-    }
-    if ($search) {
-        $search = "%$search%";
-        $statement->bindParam(':search', $search, PDO::PARAM_STR);
-    }
-    if (!empty($filters)) {
-        if (isset($filters['top_speed'])) {
-            $statement->bindParam(':top_speed', $filters['top_speed'], PDO::PARAM_INT);
-        }
-        if (isset($filters['weight'])) {
-            $statement->bindParam(':weight', $filters['weight'], PDO::PARAM_INT);
-        }
-        if (isset($filters['motor_power'])) {
-            $statement->bindParam(':motor_power', $filters['motor_power'], PDO::PARAM_INT);
-        }
-        if (isset($filters['range_per_charge'])) {
-            $statement->bindParam(':range_per_charge', $filters['range_per_charge'], PDO::PARAM_INT);
-        }
-        if (isset($filters['wheel_size'])) {
-            $statement->bindParam(':wheel_size', $filters['wheel_size'], PDO::PARAM_INT);
-        }
-    }
-    $statement->bindParam(':limit', $limit, PDO::PARAM_INT);
-    $statement->bindParam(':offset', $offset, PDO::PARAM_INT);
+//     if ($brand) {
+//         $statement->bindParam(':brand', $brand, PDO::PARAM_STR);
+//     }
+//     if ($search) {
+//         $search = "%$search%";
+//         $statement->bindParam(':search', $search, PDO::PARAM_STR);
+//     }
+//     if (!empty($filters)) {
+//         if (isset($filters['top_speed'])) {
+//             $statement->bindParam(':top_speed', $filters['top_speed'], PDO::PARAM_INT);
+//         }
+//         if (isset($filters['weight'])) {
+//             $statement->bindParam(':weight', $filters['weight'], PDO::PARAM_INT);
+//         }
+//         if (isset($filters['motor_power'])) {
+//             $statement->bindParam(':motor_power', $filters['motor_power'], PDO::PARAM_INT);
+//         }
+//         if (isset($filters['range_per_charge'])) {
+//             $statement->bindParam(':range_per_charge', $filters['range_per_charge'], PDO::PARAM_INT);
+//         }
+//         if (isset($filters['wheel_size'])) {
+//             $statement->bindParam(':wheel_size', $filters['wheel_size'], PDO::PARAM_INT);
+//         }
+//     }
+//     $statement->bindParam(':limit', $limit, PDO::PARAM_INT);
+//     $statement->bindParam(':offset', $offset, PDO::PARAM_INT);
 
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-}
+//     $statement->execute();
+//     return $statement->fetchAll(PDO::FETCH_ASSOC);
+// }
 
-function fetchBrands() {
-    $conn = Db::getConnection();
-    $statement = $conn->prepare('SELECT id, name FROM brand');
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-}
+
+// function fetchBrands() {
+//     $conn = Db::getConnection();
+//     $statement = $conn->prepare('SELECT id, name FROM brand');
+//     $statement->execute();
+//     return $statement->fetchAll(PDO::FETCH_ASSOC);
+// }
 
 $brand = filter_input(INPUT_GET, 'brand', FILTER_SANITIZE_STRING); // Get brand from URL
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING); // Get search from URL
 $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?: 1; // Get current page from URL
 $limit = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT) ?: 10; // Get limit from URL
+
+
 
 $filters = [
     'top_speed' => filter_input(INPUT_GET, 'top_speed', FILTER_VALIDATE_INT),
@@ -91,8 +97,10 @@ $filters = [
     'wheel_size' => filter_input(INPUT_GET, 'wheel_size', FILTER_VALIDATE_INT)
 ];
 
-$products = fetchProducts($brand, $search, $page, $limit, $filters); // Pass brand, search, page, limit, and filters to fetchProducts function
-$brands = fetchBrands(); // Fetch brands from the database
+
+
+$products = Product::fetchProducts($brand, $search, $page, $limit, $filters); // Pass brand, search, page, limit, and filters to fetchProducts function
+$brands = Brand::fetchBrands(); // Fetch brands from the database
 
 ?>
 <!DOCTYPE html>
@@ -176,6 +184,7 @@ $brands = fetchBrands(); // Fetch brands from the database
         </form>
     </div>
 </div>
+
         <div class="container">
             <?php foreach ($products as $product): ?>
                 <div class="card card-<?php echo htmlspecialchars($product['product_id']); ?>" data-product-id="<?php echo htmlspecialchars($product['product_id']); ?>" data-product-title="<?php echo htmlspecialchars($product['title']); ?>">
@@ -222,13 +231,12 @@ $brands = fetchBrands(); // Fetch brands from the database
     <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $page + 1])); ?>">Next &raquo;</a>
 </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
     const closeModal = document.querySelector('.close');
     const filterForm = document.getElementById('filterForm');
     const resetFiltersButton = document.getElementById('resetFilters');
-    const cards = document.querySelectorAll('.card');
 
     filterButton.addEventListener('click', function() {
         filterModal.style.display = 'block';
@@ -246,7 +254,7 @@ $brands = fetchBrands(); // Fetch brands from the database
 
     filterForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        const brand = document.getElementById('brand').value.toLowerCase().replace(' ', '-');
+        const brand = document.getElementById('brand').value;
         const price = document.getElementById('price').value;
         const topSpeed = document.getElementById('top_speed').value;
         const weight = document.getElementById('weight').value;
@@ -254,31 +262,23 @@ $brands = fetchBrands(); // Fetch brands from the database
         const rangePerCharge = document.getElementById('range_per_charge').value;
         const wheelSize = document.getElementById('wheel_size').value;
 
-        cards.forEach(card => {
-            const cardBrand = card.classList.contains(`brand-${brand}`);
-            const cardPrice = parseFloat(card.querySelector('.color h3').textContent.replace('Price: $', ''));
-            const cardTopSpeed = parseFloat(card.dataset.topSpeed);
-            const cardWeight = parseFloat(card.dataset.weight);
-            const cardMotorPower = parseFloat(card.dataset.motorPower);
-            const cardRangePerCharge = parseFloat(card.dataset.rangePerCharge);
-            const cardWheelSize = parseFloat(card.dataset.wheelSize);
+        const params = new URLSearchParams(window.location.search);
+        if (brand) params.set('brand', brand);
+        else params.delete('brand');
+        if (price) params.set('price', price);
+        else params.delete('price');
+        if (topSpeed) params.set('top_speed', topSpeed);
+        else params.delete('top_speed');
+        if (weight) params.set('weight', weight);
+        else params.delete('weight');
+        if (motorPower) params.set('motor_power', motorPower);
+        else params.delete('motor_power');
+        if (rangePerCharge) params.set('range_per_charge', rangePerCharge);
+        else params.delete('range_per_charge');
+        if (wheelSize) params.set('wheel_size', wheelSize);
+        else params.delete('wheel_size');
 
-            if (
-                (brand === '' || cardBrand) &&
-                (price === '' || cardPrice <= price) &&
-                (topSpeed === '' || cardTopSpeed >= topSpeed) &&
-                (weight === '' || cardWeight <= weight) &&
-                (motorPower === '' || cardMotorPower >= motorPower) &&
-                (rangePerCharge === '' || cardRangePerCharge >= rangePerCharge) &&
-                (wheelSize === '' || cardWheelSize >= wheelSize)
-            ) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        filterModal.style.display = 'none';
+        window.location.search = params.toString();
     });
 
     resetFiltersButton.addEventListener('click', function() {
@@ -296,12 +296,18 @@ $brands = fetchBrands(); // Fetch brands from the database
         document.getElementById('wheel_size').value = 0;
         document.getElementById('wheel_size').nextElementSibling.value = 0;
 
-        cards.forEach(card => {
-            card.style.display = 'block';
-        });
+        const params = new URLSearchParams(window.location.search);
+        params.delete('brand');
+        params.delete('price');
+        params.delete('top_speed');
+        params.delete('weight');
+        params.delete('motor_power');
+        params.delete('range_per_charge');
+        params.delete('wheel_size');
+
+        window.location.search = params.toString();
     });
 });
-        
 
 document.addEventListener('DOMContentLoaded', function () {
     const compareBtns = document.querySelectorAll('.compare-btn');

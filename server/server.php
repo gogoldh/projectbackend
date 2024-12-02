@@ -1,12 +1,12 @@
 <?php
 
-$pathToSSL = __DIR__ . '/DigiCertGlobalRootG2.crt.pem';
+$pathToSSL = __DIR__ . '/cacert.pem';
 $options = array(
     PDO::MYSQL_ATTR_SSL_CA => $pathToSSL
 );
 $host = 'alienrides.mysql.database.azure.com';
 $db = 'projectbackend';
-$user ='alienrides';
+$user ='alienrides@alienrides';
 $pass = 'aB3$XyZ9!qP&7*rT@1n';
 $db = new PDO("mysql:host=$host;port=3306;dbname=$db", $user, $pass, $options);
 

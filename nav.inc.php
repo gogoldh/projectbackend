@@ -1,7 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 include_once (__DIR__ . "/classes/Db.php");
 
 if (isset($_SESSION['id'])) {
@@ -61,5 +62,5 @@ if (isset($_SESSION['id'])) {
     </div>
     <a href="#">Sale</a>
     <a href="javascript:void(0);" id="compare-nav-button">Compare</a>
-    <a href="#">Support</a>
+    <a href="support.php">Support</a>
 </div>

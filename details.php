@@ -1,5 +1,6 @@
 <?php
 include_once (__DIR__ . "/classes/Db.php");
+include_once (__DIR__ . "/classes/Product.php");
 session_start(); // Ensure the session is started
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -8,18 +9,18 @@ if ($id === false) {
 }
 
 // Fetch product details
-function fetchProduct($id) {
-    $conn = Db::getConnection();
-    $statement = $conn->prepare('
-        SELECT p.*, b.name AS brand_name
-        FROM products p
-        LEFT JOIN brand b ON p.brand_id = b.id
-        WHERE p.product_id = :id
-    ');
-    $statement->bindParam(':id', $id, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
-}
+// function fetchProduct($id) {
+//     $conn = Db::getConnection();
+//     $statement = $conn->prepare('
+//         SELECT p.*, b.name AS brand_name
+//         FROM products p
+//         LEFT JOIN brand b ON p.brand_id = b.id
+//         WHERE p.product_id = :id
+//     ');
+//     $statement->bindParam(':id', $id, PDO::PARAM_INT);
+//     $statement->execute();
+//     return $statement->fetch(PDO::FETCH_ASSOC);
+// }
 
 // Fetch product images
 function fetchProductImages($id) {
@@ -31,28 +32,28 @@ function fetchProductImages($id) {
 }
 
 // Fetch product specifications
-function fetchProductSpecifications($id) {
-    $conn = Db::getConnection();
-    $statement = $conn->prepare('SELECT 
-        motor_power,
-        top_speed,
-        battery_capacity,
-        range_per_charge,
-        charging_time,
-        wheel_size,
-        weight_capacity,
-        incline_capability,
-        weight,
-        pedal_height,
-        tire_type,
-        suspension,
-        ip_rating,
-        speaker_system
-    FROM specifications WHERE product_id = :id');
-    $statement->bindParam(':id', $id, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC);
-}
+// function fetchProductSpecifications($id) {
+//     $conn = Db::getConnection();
+//     $statement = $conn->prepare('SELECT 
+//         motor_power,
+//         top_speed,
+//         battery_capacity,
+//         range_per_charge,
+//         charging_time,
+//         wheel_size,
+//         weight_capacity,
+//         incline_capability,
+//         weight,
+//         pedal_height,
+//         tire_type,
+//         suspension,
+//         ip_rating,
+//         speaker_system
+//     FROM specifications WHERE product_id = :id');
+//     $statement->bindParam(':id', $id, PDO::PARAM_INT);
+//     $statement->execute();
+//     return $statement->fetch(PDO::FETCH_ASSOC);
+// }
 
 // Fetch product reviews
 function fetchProductReviews($id) {
@@ -100,14 +101,10 @@ function timeAgo($datetime) {
     }
 }
 
-$product = fetchProduct($id);
-if (!$product) {
-    die('Product not found');
-}
-
-$images = fetchProductImages($id);
-$specifications = fetchProductSpecifications($id);
+$images = product::fetchProductImages($id);
+$specifications = product::fetchSpecifications($id);
 $productReviews = fetchProductReviews($id);
+$product = product::fetchProductDetails($id);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rating'], $_POST['comment_text'])) {
     $user_id = $_SESSION['id']; // Assuming user ID is stored in session
