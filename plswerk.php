@@ -1,8 +1,8 @@
 <?php
 $servername = 'alienrides.mysql.database.azure.com';
-$username = 'alienrides';
+$username = 'alienrides@alienrides';
 $password = 'aB3$XyZ9!qP&7*rT@1n';
-$database = 'projectbackend';
+$database = 'alienridesdb';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
