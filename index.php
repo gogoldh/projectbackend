@@ -132,6 +132,8 @@ $brands = Brand::fetchBrands(); // Fetch brands from the database
 <body>
     <?php include_once("nav.inc.php")?>
     <main>
+
+
     <button id="filterButton" class="btn-filter">Filter</button>
 <div id="filterModal" class="modal">
     <div class="modal-content">
@@ -414,6 +416,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updatePopup();
     }
 });
+
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 $servername = 'alienrides.mysql.database.azure.com';
-$username = 'alienrides@alienrides';
+$username = 'alienrides';
 $password = 'aB3$XyZ9!qP&7*rT@1n';
 $database = 'alienridesdb';
 

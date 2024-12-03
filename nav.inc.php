@@ -9,12 +9,14 @@ if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
 
     $conn = Db::getConnection(); // Ensure you have a valid database connection
-    $statement = $conn->prepare('SELECT fname FROM user WHERE id = :id');
+    $statement = $conn->prepare('SELECT fname, balance FROM user WHERE id = :id');
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
-    $fname = htmlspecialchars($user['fname']);  
+    $fname = htmlspecialchars($user['fname']);
+    // $credits = htmlspecialchars($user['credits']);  
+
     $isLoggedIn = true;
 } else {
     $fname = 'Guest';
@@ -39,6 +41,7 @@ if (isset($_SESSION['id'])) {
                 <?php if ($isLoggedIn): ?>
                     <a href="profile.php">Profile</a>
                     <a href="logout.php">Logout</a>
+                    <!-- <p>credits: <?php echo $credits?></p> -->
                 <?php else: ?>
                     <a href="login.php">Login</a>
                 <?php endif; ?>
