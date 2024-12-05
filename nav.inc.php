@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     $fname = htmlspecialchars($user['fname']);
-    // $credits = htmlspecialchars($user['credits']);  
+    $balance = htmlspecialchars($user['balance']);  
 
     $isLoggedIn = true;
 } else {
@@ -41,7 +41,7 @@ if (isset($_SESSION['id'])) {
                 <?php if ($isLoggedIn): ?>
                     <a href="profile.php">Profile</a>
                     <a href="logout.php">Logout</a>
-                    <!-- <p>credits: <?php echo $credits?></p> -->
+                    <a href="#">balance: <?php echo $balance?></a>
                 <?php else: ?>
                     <a href="login.php">Login</a>
                 <?php endif; ?>
