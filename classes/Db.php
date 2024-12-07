@@ -21,12 +21,6 @@ class Db {
                 error_log("DB_PORT: $port");
                 error_log("SSL Path: $pathToSSL");
 
-                echo 'DB_HOST: ' . $host . '<br>';
-                echo 'DB_NAME: ' . $db . '<br>';
-                echo 'DB_USER: ' . $user . '<br>';
-                echo 'DB_PASSWORD: ' . $pass . '<br>';
-                echo 'DB_PORT: ' . $port . '<br>';
-
                 if (!$host || !$db || !$user || !$pass || !$port) {
                     throw new Exception("Missing required environment variables.");
                 }
