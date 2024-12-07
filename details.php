@@ -149,35 +149,35 @@ if (isset($_POST['add_to_cart'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
 
-    <!-- Script om te switchen tussen main images en thumbnails -->
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
-    // AJAX for adding to cart
-    const addToCartButton = document.querySelector('.add_to_cart');
-    addToCartButton.addEventListener('click', function() {
-        const quantityInput = document.querySelector('.quantity input[type="number"]');
-        const quantity = quantityInput.value;
-        const product_id = <?php echo $id; ?>;
+         //ADD TO CART
+            const addToCartButton = document.querySelector('.add_to_cart');
+            addToCartButton.addEventListener('click', function() {
+                const quantityInput = document.querySelector('.quantity input[type="number"]');
+                const quantity = quantityInput.value;
+                const product_id = <?php echo $id; ?>;
 
-        const formData = new FormData();
-        formData.append('add_to_cart', true);
-        formData.append('product_id', product_id);
-        formData.append('quantity', quantity);
+                const formData = new FormData();
+                formData.append('add_to_cart', true);
+                formData.append('product_id', product_id);
+                formData.append('quantity', quantity);
 
-        fetch('details.php?id=<?php echo $id; ?>', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Product added to cart successfully!');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
-
+                fetch('details.php?id=<?php echo $id; ?>', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Product added to cart successfully!');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+        // IMAGE SWITCHING
         document.addEventListener('DOMContentLoaded', function() {
             const mainImage = document.querySelector('.main-image img');
             const thumbnails = document.querySelectorAll('.thumbnail-images img');
@@ -205,7 +205,7 @@ if (isset($_POST['add_to_cart'])) {
                 }
             });
 
-            // AJAX for review submission
+            // COMMENT/REVIEW
             const reviewForm = document.getElementById('reviewForm');
             reviewForm.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -226,22 +226,22 @@ if (isset($_POST['add_to_cart'])) {
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-    const minusButton = document.querySelector('.quantity button:first-of-type');
-    const plusButton = document.querySelector('.quantity button:last-of-type');
-    const quantityInput = document.querySelector('.quantity input[type="number"]');
+            const minusButton = document.querySelector('.quantity button:first-of-type');
+            const plusButton = document.querySelector('.quantity button:last-of-type');
+            const quantityInput = document.querySelector('.quantity input[type="number"]');
 
-    minusButton.addEventListener('click', function() {
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
-        }
-    });
+            minusButton.addEventListener('click', function() {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
 
-    plusButton.addEventListener('click', function() {
-        let currentValue = parseInt(quantityInput.value);
-        quantityInput.value = currentValue + 1;
-    });
-});
+            plusButton.addEventListener('click', function() {
+                let currentValue = parseInt(quantityInput.value);
+                quantityInput.value = currentValue + 1;
+            });
+        });
     </script>
 </head>
 <body class="details">
@@ -259,7 +259,7 @@ if (isset($_POST['add_to_cart'])) {
             </div>
         </div>
 
-        <!-- info -->
+        <!-- DETAILS -->
         <div class="product-details">
             <h1><?php echo htmlspecialchars($product['brand_name']); ?> <?php echo htmlspecialchars($product['title']); ?></h1>
             <p class="sale">SALE</p>
@@ -267,7 +267,7 @@ if (isset($_POST['add_to_cart'])) {
             <p class="stock-status">In stock! Ships next business day.</p>
             <p class="shipping-info">Free shipping for black friday</p>
 
-            <!-- buttons -->
+            <!-- BUTTON -->
             <div class="quantity">
                 <button type="button">-</button>
                 <input type="number" value="1" min="1">
@@ -308,11 +308,11 @@ if (isset($_POST['add_to_cart'])) {
                 <div class="form-group">
                     <label for="rating">Rating:</label>
                     <div class="star-rating">
-                        <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars">&#9733;</label>
-                        <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars">&#9733;</label>
-                        <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars">&#9733;</label>
-                        <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars">&#9733;</label>
                         <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 star">&#9733;</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars">&#9733;</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars">&#9733;</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars">&#9733;</label>
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars">&#9733;</label>
                     </div>
                 </div>
                 <div class="form-group">

@@ -6,31 +6,30 @@ class Db {
     public static function getConnection() {
         if (self::$conn == null) {
             try {
-                $host = 'alienrides.mysql.database.azure.com';
-                $db = 'alienridesdb';
-                $user = 'alienrides';
-                $pass = 'aB3$XyZ9!qP&7*rT@1n';
-                $pathToSSL = './cacert.pem'; // Ensure this path is correct and accessible
+                $config = include('db_config.php');
 
-                // Ensure SSL connection
-                $options = array(
-                    PDO::MYSQL_ATTR_SSL_CA => $pathToSSL,
-                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-                );
-
-                if (!file_exists($pathToSSL)) {
-                    throw new Exception("SSL certificate not found at path: $pathToSSL");
+                if (!file_exists($config['ssl'])) {
+                    throw new Exception("SSL certificate not found at path: {$config['ssl']}");
                 }
 
-                self::$conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass, $options);
+                $options = [
+                    PDO::MYSQL_ATTR_SSL_CA => $config['ssl'],
+                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                ];
+
+                self::$conn = new PDO(
+                    "mysql:host={$config['host']};dbname={$config['db']}",
+                    $config['user'],
+                    $config['pass'],
+                    $options
+                );
             } catch (PDOException $e) {
-                // Handle the error, for example, log it and/or display a user-friendly message
                 error_log("Connection failed: " . $e->getMessage());
-                die("Database connection failed: " . $e->getMessage());
+                die("Database connection failed.");
             } catch (Exception $e) {
                 error_log("Error: " . $e->getMessage());
-                die("Error: " . $e->getMessage());
+                die("Error occurred.");
             }
         }
         return self::$conn;

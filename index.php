@@ -311,18 +311,14 @@ $brands = Brand::fetchBrands(); // Fetch brands from the database
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const compareBtns = document.querySelectorAll('.compare-btn');
-    const comparePopup = document.getElementById('comparePopup');
+document.addEventListener('DOMContentLoaded', function() {
     const selectedProductsList = document.getElementById('selectedProductsList');
     const compareNowBtn = document.getElementById('compareNowBtn');
-    const closePopupBtn = document.getElementById('closePopupBtn');
     const comparePopupButton = document.getElementById('comparePopupButton');
-
-    // Array to store selected product details
+    const comparePopup = document.getElementById('comparePopup');
     let selectedProducts = JSON.parse(localStorage.getItem('selectedProducts')) || [];
 
-    // Function to update the popup
+    // Function to update the popup with selected products
     function updatePopup() {
         selectedProductsList.innerHTML = '';
         selectedProducts.forEach(product => {
@@ -345,14 +341,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const productName = productCard.getAttribute('data-product-title');
         if (selectedProducts.length < 2 && !selectedProducts.some(product => product.id === productId)) {
             selectedProducts.push({ id: productId, name: productName });
-            localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
-            updatePopup();
+        } else if (selectedProducts.length === 2 && !selectedProducts.some(product => product.id === productId)) {
+            // Remove the first selected product
+            selectedProducts.shift();
+            // Add the new product
+            selectedProducts.push({ id: productId, name: productName });
         }
-        if (selectedProducts.length === 2) {
-            // alert('You can now compare products.');
-
-            // Maak hier een pop up voor de gebruiker
-        }
+        localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+        updatePopup();
     }
 
     // Function to remove a product from the selection
@@ -368,46 +364,20 @@ document.addEventListener('DOMContentLoaded', function () {
         updatePopup();
     }
 
-    // Function to hide the popup
-    function hidePopup() {
-        comparePopup.classList.add('hidden');
-    }
-
-    // Event listener for compare buttons
-    compareBtns.forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const productId = this.getAttribute('data-product-id');
-            addProduct(productId);
-            showPopup();
-        });
-    });
-
-    // Event listener for Compare Now button
-    compareNowBtn.addEventListener('click', function () {
-        if (selectedProducts.length === 2) {
-            const compareUrl = `compare.php?product1=${selectedProducts[0].id}&product2=${selectedProducts[1].id}`;
-            window.location.href = compareUrl;
-        } else {
-            // alert('Please select 2 products to compare.');
-            // Schrijf hier nog een pop up voor de gebruiker
-
-
-        }
-    });
-
     // Event listener for Compare Popup button
     comparePopupButton.addEventListener('click', function () {
         showPopup();
     });
 
     // Event listener for Close Popup button
-    closePopupBtn.addEventListener('click', hidePopup);
+    document.getElementById('closePopupBtn').addEventListener('click', function () {
+        comparePopup.classList.add('hidden');
+    });
 
     // Close popup if clicked outside the content
     window.addEventListener('click', function (event) {
         if (event.target === comparePopup) {
-            hidePopup();
+            comparePopup.classList.add('hidden');
         }
     });
 
@@ -416,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updatePopup();
     }
 });
-
     </script>
 </body>
 </html>
