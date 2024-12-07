@@ -13,6 +13,7 @@ class Db {
                 $port = getenv('DB_PORT');
                 $pathToSSL = __DIR__ . '/../cacert.pem';
 
+
                 if (!$host || !$db || !$user || !$pass || !$port) {
                     throw new Exception("Missing required environment variables.");
                 }

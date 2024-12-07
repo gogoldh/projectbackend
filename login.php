@@ -14,7 +14,11 @@ function canLogin($p_email, $p_password){
         if(password_verify($p_password, $hash)){
             // Set session variables on successful login
             $_SESSION['id'] = $user['id']; // Store user ID in session
-            $_SESSION['fname'] = $user['fname']; // Store user first name in session
+            $_SESSION['fname'] = htmlspecialchars($user['fname'], ENT_QUOTES, 'UTF-8'); // Store user first name in session
+
+            // Debugging output
+            error_log("User ID: " . $_SESSION['id']);
+            error_log("User First Name: " . $_SESSION['fname']);
 
             if ($user['role'] === 'admin') {
                 header("Location: admin.php");
@@ -31,8 +35,12 @@ function canLogin($p_email, $p_password){
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+    // Debugging output
+    error_log("Email: " . $email);
+    error_log("Password: " . $password);
 
     // Call the canLogin function
     if (canLogin($email, $password)) {

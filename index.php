@@ -4,6 +4,7 @@ include_once (__DIR__ . "/classes/Product.php");
 include_once (__DIR__ . "/classes/Brand.php");
 
 
+
 // function fetchProducts($brand = null, $search = null, $page = 1, $limit = 10, $filters = []){
 //     $conn = Db::getConnection();
 //     $offset = ($page - 1) * $limit;
