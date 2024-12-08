@@ -38,7 +38,6 @@ if (isset($_SESSION['id'])) {
                 <i class="fa fa-user"></i> <?php echo $fname; ?>
             </a>
             <div class="profile__dropdown">
-                <a href="profile.php">Profile</a>
                 <?php if ($isLoggedIn): ?>
                     <a href="profile.php">Profile</a>
                     <a href="logout.php">Logout</a>
