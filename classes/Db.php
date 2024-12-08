@@ -6,6 +6,7 @@ class Db {
     public static function getConnection() {
         if (self::$conn == null) {
             try {
+               
                 $host = getenv('DB_HOST');
                 $db = getenv('DB_NAME');
                 $user = getenv('DB_USER');

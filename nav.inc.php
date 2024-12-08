@@ -1,7 +1,7 @@
 <?php
-// if (session_status() == PHP_SESSION_NONE) {
-//     session_start();
-// }
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include_once (__DIR__ . "/classes/Db.php");
 
 if (isset($_SESSION['id'])) {
@@ -30,7 +30,6 @@ if (isset($_SESSION['id'])) {
         <form action="" method="get">
             <input type="text" name="search" class="nav__search">
         </form>
-        <a href="mylist.php">Cart</a>
         <a href="cart.php">Cart</a>
         
         <!-- Profile Button with Dropdown -->
@@ -66,10 +65,7 @@ if (isset($_SESSION['id'])) {
             <a href="index.php?brand=Nosfet">Nosfet</a>
         </div>
     </div>
-    <a href="#">Sale</a>
-    <a href="#">Accessories</a>
-    <a href="#">Support</a>
-</div>
-    <a href="javascript:void(0);" id="compare-nav-button">Compare</a>
+
     <a href="support.php">Support</a>
+</div>
 </div>
