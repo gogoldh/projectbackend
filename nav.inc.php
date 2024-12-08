@@ -2,22 +2,21 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
 include_once (__DIR__ . "/classes/Db.php");
 
 if (isset($_SESSION['id'])) {
-    error_log("Session ID: " . $_SESSION['id']); // Debugging output
     $id = $_SESSION['id'];
     
     $conn = Db::getConnection(); // Ensure you have a valid database connection
+    $statement = $conn->prepare('SELECT fname FROM user WHERE id = :id');
     $statement = $conn->prepare('SELECT fname, balance FROM user WHERE id = :id');
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
+    $fname = htmlspecialchars($user['fname']);  
     $fname = htmlspecialchars($user['fname']);
     $balance = htmlspecialchars($user['balance']);  
-
     $isLoggedIn = true;
 } else {
     $fname = 'Guest';
@@ -31,6 +30,7 @@ if (isset($_SESSION['id'])) {
         <form action="" method="get">
             <input type="text" name="search" class="nav__search">
         </form>
+        <a href="mylist.php">Cart</a>
         <a href="cart.php">Cart</a>
         
         <!-- Profile Button with Dropdown -->
@@ -39,6 +39,8 @@ if (isset($_SESSION['id'])) {
                 <i class="fa fa-user"></i> <?php echo $fname; ?>
             </a>
             <div class="profile__dropdown">
+                <a href="profile.php">Profile</a>
+                <a href="logout.php">Logout</a>
                 <?php if ($isLoggedIn): ?>
                     <a href="profile.php">Profile</a>
                     <a href="logout.php">Logout</a>
@@ -64,5 +66,10 @@ if (isset($_SESSION['id'])) {
             <a href="index.php?brand=Nosfet">Nosfet</a>
         </div>
     </div>
+    <a href="#">Sale</a>
+    <a href="#">Accessories</a>
+    <a href="#">Support</a>
+</div>
+    <a href="javascript:void(0);" id="compare-nav-button">Compare</a>
     <a href="support.php">Support</a>
 </div>
