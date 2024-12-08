@@ -11,6 +11,9 @@ function canLogin($p_email, $p_password){
     $statement->bindValue(':email', $p_email);
     $statement->execute();
 
+    error_log("Setting Session ID: " . $user['id']);
+    $_SESSION['id'] = $user['id'];
+
     $user = $statement->fetch(PDO::FETCH_ASSOC);
     if($user){
         $hash = $user['password'];
@@ -30,7 +33,7 @@ function canLogin($p_email, $p_password){
                 header("Location: index.php");
                 echo $_SESSION['id'];
             }
-            exit;
+            exit();
         } else {
             return false; // wrong password
         }
@@ -46,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Debugging output
     error_log("Email: " . $email);
     error_log("Password: " . $password);
+    error_log("Session ID on login page: " . $_SESSION['id']);
 
     // Call the canLogin function
     if (canLogin($email, $password)) {

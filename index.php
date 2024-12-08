@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include_once (__DIR__ . "/classes/Db.php");
 include_once (__DIR__ . "/classes/Product.php");
 include_once (__DIR__ . "/classes/Brand.php");
@@ -101,6 +104,7 @@ $filters = [
 
 $products = Product::fetchProducts($brand, $search, $page, $limit, $filters); // Pass brand, search, page, limit, and filters to fetchProducts function
 $brands = Brand::fetchBrands(); // Fetch brands from the database
+error_log("Session ID on login page: " . $_SESSION['id']);
 
 ?>
 <!DOCTYPE html>
