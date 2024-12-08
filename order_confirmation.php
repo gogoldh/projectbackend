@@ -29,11 +29,11 @@ $order_statement->bindParam(':order_id', $order_id, PDO::PARAM_INT);
 $order_statement->execute();
 $order_details = $order_statement->fetchAll(PDO::FETCH_ASSOC);
 
-if (empty($order_items)) {
+if (empty($order_details)) {
     die('Order not found.');
 }
 
-$total_price = $order_items[0]['total_price'];
+$total_price = $order_details[0]['total_price'];
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +53,7 @@ $total_price = $order_items[0]['total_price'];
             <p>Thank you for your purchase! Your order details are below:</p>
         </div>
         <div class="order-details">
-            <?php foreach ($order_items as $item): ?>
+            <?php foreach ($order_details as $item): ?>
                 <div class="order-item">
                     <img src="<?php echo htmlspecialchars($item['image_url']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
                     <div class="order-item-info">
