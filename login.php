@@ -1,6 +1,9 @@
 <?php
 include_once (__DIR__ . "/classes/Db.php");
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 function canLogin($p_email, $p_password){
     $conn = Db::getConnection();
@@ -22,6 +25,7 @@ function canLogin($p_email, $p_password){
 
             if ($user['role'] === 'admin') {
                 header("Location: admin.php");
+                echo $_SESSION['id'];
             } else {
                 header("Location: index.php");
                 echo $_SESSION['id'];

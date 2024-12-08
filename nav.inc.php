@@ -6,6 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 include_once (__DIR__ . "/classes/Db.php");
 
 if (isset($_SESSION['id'])) {
+    error_log("Session ID: " . $_SESSION['id']); // Debugging output
     $id = $_SESSION['id'];
     
     $conn = Db::getConnection(); // Ensure you have a valid database connection
