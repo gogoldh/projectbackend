@@ -6,11 +6,11 @@ class Db {
     public static function getConnection() {
         if (self::$conn == null) {
             try {
-                putenv('DB_HOST=alienrides.mysql.database.azure.com');
-                putenv('DB_NAME=alienridesdb');
-                putenv('DB_USER=alienrides');
-                putenv('DB_PASSWORD=aB3$XyZ9!qP&7*rT@1n');
-                putenv('DB_PORT=3306');
+                // putenv('DB_HOST=alienrides.mysql.database.azure.com');
+                // putenv('DB_NAME=alienridesdb');
+                // putenv('DB_USER=alienrides');
+                // putenv('DB_PASSWORD=aB3$XyZ9!qP&7*rT@1n');
+                // putenv('DB_PORT=3306');
                 $host = getenv('DB_HOST');
                 $db = getenv('DB_NAME');
                 $user = getenv('DB_USER');
