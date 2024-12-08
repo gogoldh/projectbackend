@@ -82,9 +82,8 @@ include_once (__DIR__ . "/classes/Brand.php");
 //     $statement->execute();
 //     return $statement->fetchAll(PDO::FETCH_ASSOC);
 // }
-
-$brand = filter_input(INPUT_GET, 'brand', FILTER_SANITIZE_STRING); // Get brand from URL
-$search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING); // Get search from URL
+$search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_SPECIAL_CHARS); // Get search from URL
+$brand = filter_input(INPUT_GET, 'brand', FILTER_SANITIZE_SPECIAL_CHARS); // Get brand from URL
 $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?: 1; // Get current page from URL
 $limit = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT) ?: 10; // Get limit from URL
 
