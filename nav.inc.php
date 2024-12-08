@@ -39,7 +39,6 @@ if (isset($_SESSION['id'])) {
             </a>
             <div class="profile__dropdown">
                 <a href="profile.php">Profile</a>
-                <a href="logout.php">Logout</a>
                 <?php if ($isLoggedIn): ?>
                     <a href="profile.php">Profile</a>
                     <a href="logout.php">Logout</a>
