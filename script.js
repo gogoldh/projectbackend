@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
@@ -6,50 +5,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterForm = document.getElementById('filterForm');
     const resetFiltersButton = document.getElementById('resetFilters');
     const cards = document.querySelectorAll('.card');
+
+    // Open de filter modal
     filterButton.addEventListener('click', function() {
         filterModal.style.display = 'block';
     });
+
+    // Sluit de filter modal
     closeModal.addEventListener('click', function() {
         filterModal.style.display = 'none';
     });
+
     window.addEventListener('click', function(event) {
         if (event.target == filterModal) {
             filterModal.style.display = 'none';
         }
     });
+
+    // Filter formulier verwerken
     filterForm.addEventListener('submit', function(event) {
         event.preventDefault();
+
+        // Lees filterwaarden
         const brand = document.getElementById('brand').value.toLowerCase().replace(' ', '-');
-        const price = document.getElementById('price').value;
-        const topSpeed = document.getElementById('top_speed').value;
-        const weight = document.getElementById('weight').value;
-        const motorPower = document.getElementById('motor_power').value;
-        const rangePerCharge = document.getElementById('range_per_charge').value;
-        const wheelSize = document.getElementById('wheel_size').value;
+        const price = parseFloat(document.getElementById('price').value) || Infinity; // Gebruik Infinity als standaard
+        const topSpeed = parseFloat(document.getElementById('top_speed').value) || 0;
+        const weight = parseFloat(document.getElementById('weight').value) || Infinity;
+        const motorPower = parseFloat(document.getElementById('motor_power').value) || 0;
+        const rangePerCharge = parseFloat(document.getElementById('range_per_charge').value) || 0;
+        const wheelSize = parseFloat(document.getElementById('wheel_size').value) || 0;
+
+        // Filter de kaarten
         cards.forEach(card => {
             const cardBrand = card.classList.contains(`brand-${brand}`);
-            const cardPrice = parseFloat(card.querySelector('.color h3').textContent.replace('Price: $', ''));
-            const cardTopSpeed = parseFloat(card.dataset.topSpeed);
-            const cardWeight = parseFloat(card.dataset.weight);
-            const cardMotorPower = parseFloat(card.dataset.motorPower);
-            const cardRangePerCharge = parseFloat(card.dataset.rangePerCharge);
-            const cardWheelSize = parseFloat(card.dataset.wheelSize);
+            const cardPrice = parseFloat(card.querySelector('.color h3').textContent.replace('Price: $', '').trim()) || 0;
+            const cardTopSpeed = parseFloat(card.dataset.topSpeed) || 0;
+            const cardWeight = parseFloat(card.dataset.weight) || 0;
+            const cardMotorPower = parseFloat(card.dataset.motorPower) || 0;
+            const cardRangePerCharge = parseFloat(card.dataset.rangePerCharge) || 0;
+            const cardWheelSize = parseFloat(card.dataset.wheelSize) || 0;
+
             if (
                 (brand === '' || cardBrand) &&
-                (price === '' || cardPrice <= price) &&
-                (topSpeed === '' || cardTopSpeed >= topSpeed) &&
-                (weight === '' || cardWeight <= weight) &&
-                (motorPower === '' || cardMotorPower >= motorPower) &&
-                (rangePerCharge === '' || cardRangePerCharge >= rangePerCharge) &&
-                (wheelSize === '' || cardWheelSize >= wheelSize)
+                (price === Infinity || cardPrice <= price) &&
+                (topSpeed === 0 || cardTopSpeed >= topSpeed) &&
+                (weight === Infinity || cardWeight <= weight) &&
+                (motorPower === 0 || cardMotorPower >= motorPower) &&
+                (rangePerCharge === 0 || cardRangePerCharge >= rangePerCharge) &&
+                (wheelSize === 0 || cardWheelSize >= wheelSize)
             ) {
                 card.style.display = 'block';
             } else {
                 card.style.display = 'none';
             }
         });
+
+        // Sluit de modal na filteren
         filterModal.style.display = 'none';
     });
+
+    // Reset filters
     resetFiltersButton.addEventListener('click', function() {
         document.getElementById('brand').value = '';
         document.getElementById('price').value = 5000;
@@ -64,11 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('range_per_charge').nextElementSibling.value = 0;
         document.getElementById('wheel_size').value = 0;
         document.getElementById('wheel_size').nextElementSibling.value = 0;
+
+        // Toon alle kaarten
         cards.forEach(card => {
             card.style.display = 'block';
         });
     });
 });
+
 document.addEventListener('DOMContentLoaded', function () {
     const compareBtns = document.querySelectorAll('.compare-btn');
     const comparePopup = document.getElementById('comparePopup');

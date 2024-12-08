@@ -182,7 +182,7 @@ background-position: 0 50%;
 #nav__wrapper
 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -203,10 +203,12 @@ background-position: 0 50%;
 }
 
 .dropdown {
-  float: left;
-  overflow: hidden;
+  /* float: left;
+  overflow: hidden; */
   z-index: 1002;
+  position: relative;
 }
+
 
 .dropdown .dropbtn {
   border: none;
@@ -215,25 +217,13 @@ background-position: 0 50%;
   background-color: inherit;
   font-family: inherit; 
   margin: 0; 
+  width: 12em;
 }
 
 
 .dropbtn:hover, .dropdown:hover .dropbtn {
   background-color: var(--orange);
 }
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--black);
-  min-width: 100px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1003;
-  display: hidden;
-  grid-template-rows: repeat(4, 1fr);
-  align-items: center;
-}
-
 
 .dropdown-content a {
   float: none;
@@ -254,25 +244,12 @@ background-position: 0 50%;
 .dropdown:hover .dropdown-content {
   display: grid;
   grid-template-rows: repeat(4, 1fr);
-  left: 165px;
-  width: 8%;
+  position: absolute;
 }
 
-/* .nav__wrapper a:hover
-{
-  background-color: var(--orange);
-} */
-
-/* .container .card .contentBx button.compare-btn {
-  color: var(--orange);
-  background-color: rgba(0,0,0,0);
-  display: block;
-  padding: 0;
-  align-self: center;
-} */
-
-
-
+.dropdown:hover .dropdown-content {
+  display: flex;
+}
 
 .container {
   position: relative;
@@ -494,104 +471,9 @@ background-position: 0 50%;
 h1{
   font-size: 12vw;
 }
-
-.progress-wrap {
-  position: fixed;
-  right: 50px;
-  bottom: 50px;
-  height: 46px;
-  width: 46px;
-  cursor: pointer;
-  display: block;
-  border-radius: 50px;
-  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);
-  z-index: 10000;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(15px);
-  -webkit-transition: all 200ms linear;
-  transition: all 200ms linear;
-}
-
-.progress-wrap.active-progress {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.progress-wrap::after {
-  position: absolute;
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  content: '\f062';
-  text-align: center;
-  line-height: 46px;
-  font-size: 18px;
-  color: #1f2029;
-  left: 0;
-  top: 0;
-  height: 46px;
-  width: 46px;
-  cursor: pointer;
-  display: block;
-  z-index: 1;
-  -webkit-transition: all 200ms linear;
-  transition: all 200ms linear;
-}
-
-.lightScrollIcon::after {
-  color: #ecedf3 !important;
-}
-
-.progress-wrap:hover::after {
-  opacity: 0;
-}
-
-.progress-wrap::before {
-  position: absolute;
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  content: '\f062';
-  text-align: center;
-  line-height: 46px;
-  font-size: 18px;
-  opacity: 0;
-  background-image: linear-gradient(298deg, #da2c4d, #f8ab37);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  left: 0;
-  top: 0;
-  height: 46px;
-  width: 46px;
-  cursor: pointer;
-  display: block;
-  z-index: 2;
-  -webkit-transition: all 200ms linear;
-  transition: all 200ms linear;
-}
-
-.progress-wrap:hover::before {
-  opacity: 1;
-}
-
-.progress-wrap svg path {
-  fill: none;
-}
-
-.progress-wrap svg.progress-circle path {
-  stroke: #1f2029;
-  stroke-width: 4;
-  box-sizing: border-box;
-  -webkit-transition: all 200ms linear;
-  transition: all 200ms linear;
-}
-
 .admin {
   background-color: var(--black);
 }
-
-
-
 
 .product-container {
   display: flex;
@@ -754,7 +636,7 @@ h2 {
 
 .feature-item {
   text-align: center;
-  width: 100px; /* Adjust as needed */
+  width: 100px; 
 }
 
 .feature-icon {
@@ -825,7 +707,6 @@ span {
   background: #ddd;
 }
 
-/* Products per page filter styling */
 .pages {
   display: flex;
   justify-content: center;
@@ -925,7 +806,6 @@ span {
   color: red;
 }
 
-/* Styled table */
 .styled-table {
   width: 100%;
   border-collapse: collapse;
@@ -965,7 +845,6 @@ span {
   color: var(--black);
 }
 
-/* Button styling */
 .btn--danger {
   background-color: #e74c3c;
   color: var(--black);
@@ -984,13 +863,13 @@ span {
   display: block;
   width: 30%;
   padding: 10px;
-  margin: 10px auto; /* Center the button horizontally */
+  margin: 10px auto; 
   background-color: var(--orange);
   color: var(--black);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  text-align: center; /* Center the text */
+  text-align: center; 
   font-size: 1.2em;
   transition: background-color 0.3s ease;
 }
@@ -1004,13 +883,14 @@ span {
   margin-top: 5px;
 }
 
-/* Profile Button */
+.dropdown,
 .profile {
   position: relative;
   display: inline-block;
 }
 
-.profile__button {
+.dropbtn,
+.profile__button {  
   background-color: var(--primary-color);
   color: var(--text-color);
   padding: 10px 20px;
@@ -1023,22 +903,23 @@ span {
   transition: background-color 0.3s ease;
 }
 
+
 .profile__button i {
   margin-right: 8px;
 }
 
-/* Dropdown Content (Hidden by Default) */
+.dropdown-content,
 .profile__dropdown {
   display: none;
   position: absolute;
   background-color: var(--black);
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 9999; /* Ensure the dropdown appears above other elements */
+  z-index: 9999; 
   border-radius: 5px;
   border: 1px solid var(--orange);
 }
 
-/* Links inside the dropdown */
+.dropdown-content a,
 .profile__dropdown a {
   color: var(--orange);
   padding: 12px 12px;
@@ -1048,23 +929,20 @@ span {
   width: 8em;
 }
 
-/* Change color of dropdown links on hover */
+.dropdown-content a:hover,
 .profile__dropdown a:hover {
   background-color: var(--orange);
   color: var(--black);
 }
 
-/* Show the dropdown menu on hover */
 .profile:hover .profile__dropdown {
   display: block;
 }
 
-/* Change the background color of the profile button when the dropdown content is shown */
 .profile:hover .profile__button {
   background-color: var(--orange);
 }
 
-/* Profile Page Styles */
 .profile-container {
   max-width: 600px;
   margin: 0 auto;
@@ -1769,4 +1647,8 @@ input[type="range"]::-ms-thumb {
   margin: 10px 0;
   font-size: 1em;
   color: var(--black);
+}
+
+.product-reviews p {
+  color: var(--white);
 }

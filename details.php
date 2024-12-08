@@ -274,7 +274,6 @@ if (isset($_POST['add_to_cart'])) {
                 <button type="button">+</button>
             </div>
             <button class="add_to_cart">Add to cart</button>
-            <button class="buy_now">Buy now</button>
             
         
            
@@ -322,8 +321,9 @@ if (isset($_POST['add_to_cart'])) {
                 <button type="submit" class="btn-submit">Submit Review</button>
             </form>
         <?php else: ?>
-            <p>You must be logged in to add a review.</p>
+            <p>You must be logged in to add a review. <a href="login.php">Log in!</a></p>
         <?php endif; ?>
     </div>
+    
 </body>
 </html>

@@ -63,7 +63,5 @@ if (isset($_SESSION['id'])) {
             <a href="index.php?brand=Nosfet">Nosfet</a>
         </div>
     </div>
-    <a href="#">Sale</a>
-    <a href="javascript:void(0);" id="compare-nav-button">Compare</a>
     <a href="support.php">Support</a>
 </div>

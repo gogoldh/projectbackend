@@ -89,7 +89,7 @@ function view_cart($user_id) {
         echo "</form>";
         echo "<div class='cart-buttons'>";
         echo "<a href='checkout.php' class='btn-checkout'>Checkout</a>";
-        echo "<a href='index.php' class='btn-continue'>Continue Browsing</a>";
+        echo "<a href='index.php' class='btn-checkout'>Continue Browsing</a>";
         echo "</div>";
     }
 }
@@ -102,6 +102,7 @@ function view_cart($user_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.jpg">
 </head>
 <body class="cart_bg">
     <?php include_once("nav.inc.php")?>
