@@ -92,4 +92,21 @@ if ($user_balance >= $total_price) {
 } else {
     echo "Insufficient balance.";
 }
-?>
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container_confirm">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order!</p>
+        <p>Your order has been placed successfully.</p>
+        <p>Order ID: <?php echo htmlspecialchars($_GET['order_id']); ?></p>
+        <a href="index.php">Return to Home</a>
+    </div>
+</body>
+</html>

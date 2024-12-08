@@ -88,7 +88,7 @@ function view_cart($user_id) {
         echo "<button type='submit' name='update_cart' class='btn-update'>Update Cart</button>";
         echo "</form>";
         echo "<div class='cart-buttons'>";
-        echo "<a href='checkout.php' class='btn-checkout'>Checkout</a>";
+        echo "<a href='order_confirmation.php' class='btn-checkout'>Checkout</a>";
         echo "<a href='index.php' class='btn-checkout'>Continue Browsing</a>";
         echo "</div>";
     }
